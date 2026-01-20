@@ -1,3 +1,9 @@
 # superpwd
 
-A super, deterministic password manager.
+A super, deterministic password generator.
+
+## Usage
+
+```
+bun index.ts
+```

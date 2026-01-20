@@ -2,7 +2,7 @@
   "name": "superpwd",
   "module": "index.ts",
   "type": "module",
-  "private": true,
+  "version": "1.0.0",
   "bin": "./index.ts",
   "devDependencies": {
     "@types/bun": "latest",
