@@ -1,14 +1,17 @@
 import { generatePassword } from '../sans/superpwd'
 
-console.log('loaded')
-
 const formEl = document.getElementById('form') as HTMLFormElement
 const masterpwdEl = document.getElementById('masterpwd') as HTMLInputElement
 const keyEl = document.getElementById('key') as HTMLInputElement
 const status = document.getElementById('status') as HTMLParagraphElement
 
+masterpwdEl.value = localStorage.getItem('master-pwd') || ''
+
+masterpwdEl.addEventListener('input', () => {
+  localStorage.setItem('master-pwd', masterpwdEl.value)
+})
+
 formEl.addEventListener('submit', (event) => {
-  console.log('submitted')
   event.preventDefault()
 
   const masterPwd = masterpwdEl.value
