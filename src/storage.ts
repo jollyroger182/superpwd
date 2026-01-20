@@ -3,7 +3,7 @@ export async function getStoredPassword() {
 }
 
 export async function clearStoredPassword() {
-  await Bun.secrets.delete({ service: 'superpwd', name: 'master_password' })
+  return Bun.secrets.delete({ service: 'superpwd', name: 'master_password' })
 }
 
 export async function storePassword(password: string) {

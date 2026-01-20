@@ -2,7 +2,7 @@
 
 import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
-import { getCommand } from './src/cli'
+import { clearCommand, getCommand } from './src/cli'
 
 await yargs(hideBin(process.argv))
   .scriptName('superpwd')
@@ -30,6 +30,12 @@ await yargs(hideBin(process.argv))
           default: 1,
         }),
     async (argv) => getCommand(argv),
+  )
+  .command(
+    'clear',
+    'clear the stored master password',
+    (yargs) => yargs,
+    async () => clearCommand(),
   )
   .demandCommand()
   .parseAsync()
