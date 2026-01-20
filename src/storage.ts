@@ -16,6 +16,10 @@ export async function getStoredPassword() {
   return Bun.secrets.get({ service: 'superpwd', name: 'master_password' })
 }
 
+export async function clearStoredPassword() {
+  await Bun.secrets.delete({ service: 'superpwd', name: 'master_password' })
+}
+
 export async function storePassword(password: string) {
   // Bun.write(pwdFile, password, { mode: 0o600 })
   await Bun.secrets.set({

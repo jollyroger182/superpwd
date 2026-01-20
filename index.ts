@@ -2,6 +2,7 @@
 
 import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
+import { getCommand } from './src/cli'
 
 await yargs(hideBin(process.argv))
   .command(
@@ -12,15 +13,21 @@ await yargs(hideBin(process.argv))
         .positional('key', {
           describe: 'the key of the service',
           type: 'string',
+          demandOption: true,
         })
-        .option('password', {
-          describe: 'force to read master password from terminal input',
+        .option('interactive', {
+          describe: 'read master password from terminal input',
           type: 'boolean',
-          alias: ['p'],
+          alias: ['i'],
+          default: false,
+        })
+        .option('ver', {
+          describe: 'version of password to generate',
+          type: 'number',
+          alias: ['V'],
+          default: 1,
         }),
-    async (args) => {
-      console.log(args)
-    },
+    async (argv) => getCommand(argv),
   )
   .demandCommand()
   .parseAsync()
