@@ -10,10 +10,16 @@ export async function generatePassword(
 }
 
 export async function generatePasswordV1(masterPwd: string, key: string) {
-  const secret = new TextEncoder().encode(masterPwd)
-  const hash = await argon2.hash(`v1|${key}`, {
+  const salt = new Bun.CryptoHasher("sha256").update(`v1|${key}`).digest()
+  const hash = await argon2.hash(masterPwd, {
+    salt,
+    raw: true,
+    parallelism: 1,
+    hashLength: 32,
+    timeCost: 3,
+    memoryCost: 1 << 16,
     type: argon2.argon2id,
-    secret: Buffer.from(secret),
+    version: 0x13,
   })
-  return hash
+  return hash.toString("base64url").substring(0, 16)
 }
