@@ -1,4 +1,3 @@
-import load from 'argon2id'
 import setupWasm from 'argon2id/lib/setup'
 
 // @ts-expect-error untyped import
@@ -7,7 +6,7 @@ import SIMD_FILENAME from 'argon2id/dist/simd.wasm'
 import NON_SIMD_FILENAME from 'argon2id/dist/no-simd.wasm'
 
 export async function getArgon() {
-  if (process) {
+  if (globalThis.process) {
     return setupWasm(
       async (importObject) =>
         WebAssembly.instantiate(
@@ -21,6 +20,11 @@ export async function getArgon() {
         ),
     )
   } else {
-    return load()
+    return setupWasm(
+      async (importObject) =>
+        WebAssembly.instantiateStreaming(fetch(SIMD_FILENAME), importObject),
+      async (importObject) =>
+        WebAssembly.instantiateStreaming(fetch(NON_SIMD_FILENAME), importObject),
+    )
   }
 }

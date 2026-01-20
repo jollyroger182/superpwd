@@ -12,7 +12,11 @@ export async function generatePassword(
 }
 
 export async function generatePasswordV1(masterPwd: string, key: string) {
-  const salt = new Bun.CryptoHasher('sha256').update(`v1|${key}`).digest()
+  // const salt = new Bun.CryptoHasher('sha256').update(`v1|${key}`).digest()
+  const salt = new Uint8Array(
+    await crypto.subtle.digest('SHA-256', new TextEncoder().encode(`v1|${key}`)),
+  )
+
   const hash = argon({
     salt,
     password: new TextEncoder().encode(masterPwd),
