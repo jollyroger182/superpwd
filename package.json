@@ -6,10 +6,14 @@
   "bin": {
     "superpwd": "./index.ts"
   },
+  "scripts": {
+    "build": "bun build src/browser/index.html --outdir=dist"
+  },
   "devDependencies": {
     "@types/bun": "latest",
     "@types/prompt": "^1.1.9",
-    "@types/yargs": "^17.0.35"
+    "@types/yargs": "^17.0.35",
+    "wrangler": "^4.59.2"
   },
   "peerDependencies": {
     "typescript": "^5"
