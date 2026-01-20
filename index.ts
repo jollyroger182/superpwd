@@ -5,6 +5,8 @@ import { hideBin } from 'yargs/helpers'
 import { getCommand } from './src/cli'
 
 await yargs(hideBin(process.argv))
+  .scriptName('superpwd')
+  .strict()
   .command(
     'get <key> [password]',
     'generate a password for a service',
