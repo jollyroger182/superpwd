@@ -22,7 +22,7 @@ export async function getMasterPassword(forceInteractive: boolean) {
         description:
           'Would you like to store this master password in the system keychain?',
         type: 'boolean',
-        default: true,
+        default: false,
       },
     },
   })

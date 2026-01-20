@@ -1,5 +1,5 @@
 import { clearStoredPassword } from './storage'
-import { generatePassword } from './superpwd'
+import { generatePassword } from '../sans/superpwd'
 import { getMasterPassword } from './utils'
 
 export interface GetCommandArgs {

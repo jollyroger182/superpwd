@@ -2,7 +2,7 @@
 
 import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
-import { clearCommand, getCommand } from './src/cli'
+import { clearCommand, getCommand } from './src/cli/cli'
 
 await yargs(hideBin(process.argv))
   .scriptName('superpwd')
