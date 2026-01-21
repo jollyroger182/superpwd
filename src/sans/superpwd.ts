@@ -1,6 +1,14 @@
+import { webcrypto as crypto } from 'crypto'
 import { getArgon } from '../compat/argon'
 
-const argon = await getArgon()
+let argon: Awaited<ReturnType<typeof getArgon>> | undefined
+
+async function ensureArgon() {
+  if (!argon) {
+    argon = await getArgon()
+  }
+  return argon
+}
 
 export async function generatePassword(
   masterPwd: string,
@@ -14,9 +22,13 @@ export async function generatePassword(
 export async function generatePasswordV1(masterPwd: string, key: string) {
   // const salt = new Bun.CryptoHasher('sha256').update(`v1|${key}`).digest()
   const salt = new Uint8Array(
-    await crypto.subtle.digest('SHA-256', new TextEncoder().encode(`v1|${key}`)),
+    await crypto.subtle.digest(
+      'SHA-256',
+      new TextEncoder().encode(`v1|${key}`),
+    ),
   )
 
+  const argon = await ensureArgon()
   const hash = argon({
     salt,
     password: new TextEncoder().encode(masterPwd),
@@ -25,5 +37,9 @@ export async function generatePasswordV1(masterPwd: string, key: string) {
     memorySize: 1 << 16,
     tagLength: 32,
   })
-  return hash.toBase64({ alphabet: 'base64url' }).substring(0, 16)
+  return btoa(String.fromCharCode(...hash))
+    .replaceAll('+', '-')
+    .replaceAll('/', '_')
+    .replaceAll('=', '')
+    .substring(0, 16)
 }

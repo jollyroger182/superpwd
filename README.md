@@ -5,5 +5,5 @@ A super, deterministic password generator.
 ## Usage
 
 ```
-bun index.ts
+bun run .
 ```

@@ -1,5 +1,7 @@
-import { clearStoredPassword } from './storage'
+import yargs from 'yargs'
+import { hideBin } from 'yargs/helpers'
 import { generatePassword } from '../sans/superpwd'
+import { clearStoredPassword } from './storage'
 import { getMasterPassword } from './utils'
 
 export interface GetCommandArgs {
